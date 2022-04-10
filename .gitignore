@@ -1,0 +1,32 @@
+/node_modules
+/public/hot
+/public/storage
+/storage/*.key
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
+
+# Additional
+# -----------
+composer.lock
+package-lock.json
+/zipfiles
+/temp
+/public/app.css
+/public/app.js
+/public/css
+/public/js
+/public/fonts
+/public/webfonts
+/public/mix-manifest.json
+STATEMENT.txt
+
+# Local History for Visual Studio Code
+.history/
