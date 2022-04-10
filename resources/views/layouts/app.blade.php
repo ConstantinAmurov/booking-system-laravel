@@ -11,9 +11,16 @@
 </head>
 
 <body>
-    <div class="container">
-        @yield('content')
+    <div class="bg-blue-600 w-full h-40 rounded-b-2xl flex p-10">
+        <h1 class="my-auto text-white font-bold text-4xl">BOOK RENTAL <span class="font-light">SYSTEM</span></h1>
     </div>
+    <div class="container bg-white rounded-2xl relative -top-10 ">
+        <div class="row">
+            <div class="col pl-0">
+                <img class=" rounded-tl-2xl rounded-bl-2xl" src="{{ asset('img/abstract.jpg') }}" alt="abstract background">
+            </div>
+            <div class="col my-14"> @yield('form')</div>
+        </div>
 </body>
 
 </html>

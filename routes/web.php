@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::resource('books', BookController::class);
 
 Route::get('/book/{id}', [BookController::class, 'showBook']);
+
+Route::get('/login', function () {
+    return view('auth.login');
+});
