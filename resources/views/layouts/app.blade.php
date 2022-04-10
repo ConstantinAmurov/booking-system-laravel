@@ -17,9 +17,9 @@
     <div class="container bg-white rounded-2xl relative -top-10 ">
         <div class="row">
             <div class="col pl-0">
-                <img class=" rounded-tl-2xl rounded-bl-2xl" src="{{ asset('img/abstract.jpg') }}" alt="abstract background">
+                <img class=" rounded-tl-2xl rounded-bl-2xl min-h-full object-cover" src="{{ asset('img/abstract.jpg') }}" alt="abstract background">
             </div>
-            <div class="col my-14"> @yield('form')</div>
+            <div class="col my-12"> @yield('form')</div>
         </div>
 </body>
 
