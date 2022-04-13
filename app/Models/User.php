@@ -41,4 +41,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getBorrowRelation() {
+        return $this->hasMany(Borrow::class, 'reader_id', 'id');
+    }
 }

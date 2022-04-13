@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +31,8 @@ Route::get('/register', function () {
 //Books Route
 Route::resource('books', BookController::class);
 Route::get('/book/{id}', [BookController::class, 'index']);
+
+
+//Users route
+
+Route::get('/users', [UserController::class, 'index']);

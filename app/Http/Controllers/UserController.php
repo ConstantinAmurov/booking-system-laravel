@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Borrow;
+use App\Models\User;
 use Illuminate\Http\Request;
 
-class BorrowController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,10 +14,10 @@ class BorrowController extends Controller
      */
     public function index()
     {
+        $users = User::with(relations: "getBorrowRelation")->get();
+        dd($users);
+        return view('auth.login');
         //
-        $borrow = Borrow::with(relations: 'getUserRelation')->get();
-
-        dd($borrow);
     }
 
     /**
@@ -44,10 +44,10 @@ class BorrowController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Borrow  $borrow
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Borrow $borrow)
+    public function show($id)
     {
         //
     }
@@ -55,10 +55,10 @@ class BorrowController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Borrow  $borrow
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Borrow $borrow)
+    public function edit($id)
     {
         //
     }
@@ -67,10 +67,10 @@ class BorrowController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Borrow  $borrow
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Borrow $borrow)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -78,10 +78,10 @@ class BorrowController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Borrow  $borrow
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Borrow $borrow)
+    public function destroy($id)
     {
         //
     }
