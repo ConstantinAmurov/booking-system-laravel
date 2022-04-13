@@ -18,10 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('books', BookController::class);
-
-Route::get('/book/{id}', [BookController::class, 'showBook']);
-
+//Auth Route
 Route::get('/login', function () {
     return view('auth.login');
 });
@@ -29,3 +26,7 @@ Route::get('/login', function () {
 Route::get('/register', function () {
     return view('auth.register');
 });
+
+//Books Route
+Route::resource('books', BookController::class);
+Route::get('/book/{id}', [BookController::class, 'index']);

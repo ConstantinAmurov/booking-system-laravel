@@ -2,28 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Book;
-use App\Models\Genre;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-
-class BookController extends Controller
+class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    
-    
-    
-    public function index($id)
+    public function index()
     {
-        $book = Book::find($id);
-        return $book;
+        //
     }
 
     /**
@@ -31,21 +21,11 @@ class BookController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        $book = new Book;
-        $book->title = 'Atomic Habits';
-        $book->authors = "John Writer";
-        $book-> description = "Description example";
-        $book -> released_at = Carbon::today();
-        $book-> pages = 231;
-        $book -> isbn ='1';
-        $genre = Genre::find([1,2]);
-        $book-> genres()-> attach($genre);
-        $book-> in_stock  = 30;
-        $book-> save();
-        return 'Success';
+        //
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -65,7 +45,7 @@ class BookController extends Controller
      */
     public function show($id)
     {
-       
+        //
     }
 
     /**
@@ -76,18 +56,7 @@ class BookController extends Controller
      */
     public function edit($id)
     {
-        //  $book = new Book;
-        $book = Book::find($id);
-        $book->title = 'Atomic Habits';
-        $book->authors = "John Writer";
-        $book-> description = "Description example";
-        $book -> released_at = Carbon::today();
-        $book-> pages = 231;
-        $book -> isbn ='1';
-        $genre = Genre::find([1,2]);
-        $book-> genres()-> attach($genre);
-        $book-> in_stock  = 30;
-        $book-> save();
+        //
     }
 
     /**
@@ -111,7 +80,5 @@ class BookController extends Controller
     public function destroy($id)
     {
         //
-        Book::destroy($id);
     }
-
 }
