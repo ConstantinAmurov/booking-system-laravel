@@ -1,42 +1,59 @@
-@extends('layouts.app')
+<x-guest-layout>
+    <x-auth-card>
+        <x-slot name="logo">
+            <a href="/">
+                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
+            </a>
+        </x-slot>
 
+        <!-- Validation Errors -->
+        <x-auth-validation-errors class="mb-4" :errors="$errors" />
 
-@section('form')
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
 
-<div class="container">
-    <div class="text-4xl text-center ">
-        <h1 class="mb-3">Sign in to</h1>
-        <h1 class='font-bold'>BOOK RENTAL <span class="font-light">SYSTEM</span></h1>
-    </div>
+            <!-- Name -->
+            <div>
+                <x-label for="name" :value="__('Name')" />
 
-    <form class="text-xl mt-10" action="">
-        <label class="block mb-10">
-            <span class="text-gray-700">Name</span>
-            <input type="text" class="form-input mt-1 block w-full bg-gray-200 rounded-lg h-12 p-4" placeholder="Your Name">
-        </label>
-        <label class="block mb-10">
-            <span class="text-gray-700">E-mail</span>
-            <input type="email" class="form-input mt-1 block w-full bg-gray-200 rounded-lg h-12 p-4" placeholder="john@example.com">
-        </label>
-        <label class="block mb-10">
-            <span class="text-gray-700">Password</span>
-            <input type="password" class="form-input mt-1 block w-full bg-gray-200 rounded-lg h-12 p-4" placeholder="*****">
-        </label>
-        <label class="block">
-            <span class="text-gray-700">Repeat Password</span>
-            <input type="password" class="form-input mt-1 block w-full bg-gray-200 rounded-lg h-12 p-4" placeholder="*****">
-        </label>
-        <div class="mt-20 flex justify-between">
-            <label class="inline-flex items-center">
-                <input type="checkbox" class="form-checkbox h-6 w-6 border-2 border-blue-500 rounded-md">
-                <span class="ml-2">Remember me</span>
-            </label>
-            <a href="{{url("/login/")}}"> Have an account?</a>
-        </div>
+                <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus />
+            </div>
 
-        <button type="submit" class="w-100 h-12 mt-10 rounded-lg bg-blue-500 text-center text-white hover:bg-blue-600">Sign up</button>
-    </form>
+            <!-- Email Address -->
+            <div class="mt-4">
+                <x-label for="email" :value="__('Email')" />
 
-</div>
+                <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required />
+            </div>
 
-@stop
+            <!-- Password -->
+            <div class="mt-4">
+                <x-label for="password" :value="__('Password')" />
+
+                <x-input id="password" class="block mt-1 w-full"
+                                type="password"
+                                name="password"
+                                required autocomplete="new-password" />
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mt-4">
+                <x-label for="password_confirmation" :value="__('Confirm Password')" />
+
+                <x-input id="password_confirmation" class="block mt-1 w-full"
+                                type="password"
+                                name="password_confirmation" required />
+            </div>
+
+            <div class="flex items-center justify-end mt-4">
+                <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('login') }}">
+                    {{ __('Already registered?') }}
+                </a>
+
+                <x-button class="ml-4">
+                    {{ __('Register') }}
+                </x-button>
+            </div>
+        </form>
+    </x-auth-card>
+</x-guest-layout>

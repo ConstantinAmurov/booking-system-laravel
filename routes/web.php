@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,23 +14,11 @@ use App\Http\Controllers\UserController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/dashboard');
 });
 
-//Auth Route
-Route::get('/login', function () {
-    return view('auth.login');
-});
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
-Route::get('/register', function () {
-    return view('auth.register');
-});
-
-//Books Route
-Route::resource('books', BookController::class);
-Route::get('/book/{id}', [BookController::class, 'index']);
-
-
-//Users route
-
-Route::get('/users', [UserController::class, 'index']);
+require __DIR__.'/auth.php';

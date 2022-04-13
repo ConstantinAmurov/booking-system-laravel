@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with(relations: "readerBorrows")->get();
+        $users = User::with(relations: "getBorrowRelation")->get();
         dd($users);
         return view('auth.login');
         //
