@@ -13,4 +13,9 @@ class Borrow extends Model
     {
         return $this->belongsTo(User::class, 'id', 'reader_id');
     }
+
+    public function getBookRelation()
+    {
+        return $this->belongsTo(User::class, 'id', 'book_id');
+    }
 }
