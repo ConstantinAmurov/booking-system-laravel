@@ -28,12 +28,17 @@
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="flex flex-col text-3xl"><span>Genres List</span>
-                        <div class="mx-auto mt-10">
-                            <ol class="list-decimal">
+                        <div class=" text-base">
+
+                            @if ($genres)
+                            <ol class="list-decimal mx-7 mt-4 ">
                                 @foreach($genres as $genre)
                                 <li><a href='genre/{{$genre->id}}' class="">{{$genre->name}}</a> </li>
                                 @endforeach
                             </ol>
+                            @else
+                            <p>There are not genres yet</p>
+                            @endif
                         </div>
 
                     </div>
