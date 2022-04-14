@@ -12,7 +12,7 @@ class Book extends Model
 
     public function getAllBorrows()
     {
-        return $this->hasMany(Borrow::class, 'book_id', 'id');
+        return $this->hasMany(Borrow::class, 'book_id');
     }
 
     public function getActiveBorrows()
@@ -22,6 +22,7 @@ class Book extends Model
 
     public function getGenres()
     {
-        return $this->belongsToMany(Genre::class, 'book_table','book_id','genre_id');
+        return $this->belongsToMany(Genre::class, 'book_genre','book_id','genre_id');
     }
+
 }

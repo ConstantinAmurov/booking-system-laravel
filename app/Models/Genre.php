@@ -13,4 +13,6 @@ class Genre extends Model
     public function getBooks() {
         return $this->belongsToMany(Book::class,'book_genre','genre_id','book_id');
     }
+
+    
 }

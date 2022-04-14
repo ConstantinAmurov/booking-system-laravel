@@ -22,7 +22,7 @@ class BookFactory extends Factory
         $genreValues = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
 
         return [
-            'title' => Str::random(10),
+            'title' => rand(1, 13),
             'author' => Str::random(10),
             'genre' => $this->faker->randomElement($genreValues),
             'pages' =>  rand(100, 300),

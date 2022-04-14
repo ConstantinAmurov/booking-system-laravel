@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +18,41 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+
+Route::get('/rental', function () {
+    return view('/dashboard');
+})->middleware(['auth'])->name('rental');
+
+
+Route::get('/book', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('book');
+
+
+Route::get('/genre', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('genre');
+
+
+Route::get('/my_rental', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('my_rental');
+
+
+Route::get('/profile', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('profile');
+
+
+
+
+
+
+
+
+
+
+
+require __DIR__ . '/auth.php';
