@@ -10,11 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <div class="container mx-auto">
-                    @include('admin.books.components.filter-book-search')
-
-                    @include('admin.books.components.book-table')
-
-                      
+                        <div class="grid grid-cols-12 content-center gap-7">
+                            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4 2xl:col-span-4">
+                                {{$book->title}}
+                            </div>
+                            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-4 2xl:col-span-4">
+                                {{$book->author}}
+                            </div>
+                        </div>
                     </div>
 
                 </div>
