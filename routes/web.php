@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,15 +21,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->middleware(['auth'])->name('dashboard');
 
-
-Route::get('/rental', function () {
-    return view('/dashboard');
-})->middleware(['auth'])->name('rental');
+Route::get('/rental', )->middleware(['auth'])->name('rental');
 
 
-Route::get('/book', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('book');
+Route::get('/book', [BookController::class, 'showBooksTablePage'])->middleware(['auth'])->name('book');
+
+Route::get('/book/{id}', [BookController::class, 'showBookPage'])->middleware(['auth'])->name('book_by_id');
 
 
 Route::get('/genre', function () {

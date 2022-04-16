@@ -63,9 +63,9 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showBookPage($id)
     {
-       
+        return $id;
     }
 
     /**
@@ -112,6 +112,22 @@ class BookController extends Controller
     {
         //
         Book::destroy($id);
+    }
+
+    public function showBooksTablePage(Request $request) {
+        $filter = $request->query('filter');
+    
+        if (!empty($filter)) {
+            $books = Book::sortable()
+                ->where('title', 'like', '%'.$filter.'%')->orWhere('author', 'like', '%'.$filter.'%')
+                ->paginate(10);
+        } else {
+            $books = Book::sortable()
+                ->paginate(10);
+        }
+    
+        
+        return view('admin.books.index',compact('books','filter'));
     }
 
 }

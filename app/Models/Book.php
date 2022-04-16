@@ -4,10 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 
 class Book extends Model
 {
     use HasFactory;
+    use Sortable;
+
+    protected $table = 'books';
+    protected $fillable = ['title','author'];
+
+    public $sortable = ['title','author','description','released_at','pages','in_stock'];
+
 
 
     public function getAllBorrows()
