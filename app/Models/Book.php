@@ -28,9 +28,9 @@ class Book extends Model
         return $this->getAllBorrows()->where('status', '=', 'ACCEPTED');
     }
 
-    public function getGenres()
+    public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'book_genre','book_id','genre_id');
+        return $this->belongsToMany(Genre::class, 'book_genres','book_id','genre_id');
     }
 
 }

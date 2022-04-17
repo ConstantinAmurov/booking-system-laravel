@@ -26,9 +26,9 @@ return new class extends Migration
 
             $table->timestamps();
 
-            $table->foreign('reader_id')->references('id')->on('users');
-            $table->foreign('book_id')->references('id')->on('books');
-            $table->foreign('return_managed_by')->references('id')->on('users');
+            $table->foreign('reader_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('return_managed_by')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

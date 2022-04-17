@@ -21,15 +21,23 @@
 
                                 <div class="grid grid-cols-12 content-center gap-7">
                                     <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 2xl:col-span-4 font-extrabold">
-                                        <p>GENRE</p>
+                                        <p>GENRES</p>
                                         <p>DATE OF PUBLISH</p>
                                         <p>PAGES</p>
                                         <p>LANGUAGE</p>
                                         <p>ISBN NUMBER</p>
                                         <p>AVAILABLE BOOKS</p>
                                     </div>
-                                    <div class="col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-4 xl:col-span-4 2xl:col-span-4">
-                                        <p>{{$book->genre}}</p>
+                                    <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8  xl:col-span-8 2xl:col-span-8 ">
+                                        <p>
+                                            @foreach($book->genres as $genre)
+                                                @if($loop->last)
+                                                    {{$genre->name}}
+                                                @else
+                                                    {{$genre->name}},
+                                                @endif
+                                            @endforeach
+                                        </p>
                                         <p>{{$book->released_at}}</p>
                                         <p>{{$book->pages}}</p>
                                         <p>{{$book->language_code}}</p>
@@ -42,7 +50,7 @@
 
                                     <a class="px-4 py-1 rounded-md bg-gray-100 hover:bg-gray-200 hover:shadow-sm" href="edit/{{ $book->id }}">Edit</a>
 
-                                    <form style="display:inline-block" action="delete/{{ $book->id }}" method="POST">
+                                    <form style="display:inline-block" action="{{ $book->id }}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button class="px-4 py-1 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-sm ml-4 text-white">Delete</button>

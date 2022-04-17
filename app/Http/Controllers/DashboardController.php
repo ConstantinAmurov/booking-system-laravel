@@ -32,8 +32,4 @@ class DashboardController extends Controller
         return $activeBooksCount;
     }
 
-    private function getGenresList()
-    {
-
-    }
 }

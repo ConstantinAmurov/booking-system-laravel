@@ -17,12 +17,12 @@ class BookController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    
-    
-    
+
+
+
     public function index($id)
     {
-        $book = Book::find($id);
+        $book = Book::findOrFail($id);
         return $book;
     }
 
@@ -33,17 +33,7 @@ class BookController extends Controller
      */
     public function create(Request $request)
     {
-        $book = new Book;
-        $book->title = 'Atomic Habits';
-        $book->authors = "John Writer";
-        $book-> description = "Description example";
-        $book -> released_at = Carbon::today();
-        $book-> pages = 231;
-        $book -> isbn ='1';
-        $genre = Genre::find([1,2]);
-        $book-> genres()-> attach($genre);
-        $book-> in_stock  = 30;
-        $book-> save();
+        
         return 'Success';
     }
     /**
@@ -65,9 +55,8 @@ class BookController extends Controller
      */
     public function showBookPage($id)
     {
-        $book = Book::find($id);
-
-        return view('admin.books.book-page',compact('book'));
+        $book = Book::with('genres')->findOrFail($id);
+        return view('admin.books.book-page', compact('book'));
     }
 
     /**
@@ -79,17 +68,11 @@ class BookController extends Controller
     public function edit($id)
     {
         //  $book = new Book;
-        $book = Book::find($id);
-        $book->title = 'Atomic Habits';
-        $book->authors = "John Writer";
-        $book-> description = "Description example";
-        $book -> released_at = Carbon::today();
-        $book-> pages = 231;
-        $book -> isbn ='1';
-        $genre = Genre::find([1,2]);
-        $book-> genres()-> attach($genre);
-        $book-> in_stock  = 30;
-        $book-> save();
+        $book = Book::with('genres')->findOrFail($id);
+        $book->genres = $book->genres->toArray();
+        $genres = Genre::all();
+
+        return view('admin.books.edit-page', compact('book', 'genres'));
     }
 
     /**
@@ -101,7 +84,22 @@ class BookController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $book = Book::findOrFail($id);
+        
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
+        $book->released_at = $request->released_at;
+        $book->pages = $request->pages;
+        $book->isbn = $request->isbn;
+        $book->language_code = $request->language_code;
+        $book->in_stock  = $request->in_stock;
+
+        $genres = Genre::find($request->genres);
+        $book->genres()->sync($genres);
+
+        $book->save();
+        return  redirect('/book/' . $id);
     }
 
     /**
@@ -112,24 +110,27 @@ class BookController extends Controller
      */
     public function destroy($id)
     {
-        //
-        Book::destroy($id);
+        $book = Book::findOrFail($id);
+        if ($book) {
+            $book->delete();
+        }
+        return redirect('dashboard');
     }
 
-    public function showBooksTablePage(Request $request) {
+    public function showBooksTablePage(Request $request)
+    {
         $filter = $request->query('filter');
-    
+
         if (!empty($filter)) {
             $books = Book::sortable()
-                ->where('title', 'like', '%'.$filter.'%')->orWhere('author', 'like', '%'.$filter.'%')
+                ->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%')
                 ->paginate(10);
         } else {
             $books = Book::sortable()
                 ->paginate(10);
         }
-    
-        
-        return view('admin.books.index',compact('books','filter'));
-    }
 
+
+        return view('admin.books.index', compact('books', 'filter'));
+    }
 }

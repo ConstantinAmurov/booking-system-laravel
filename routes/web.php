@@ -21,12 +21,16 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/rental', )->middleware(['auth'])->name('rental');
+Route::get('/rental',)->middleware(['auth'])->name('rental');
 
 
 Route::get('/book', [BookController::class, 'showBooksTablePage'])->middleware(['auth'])->name('book');
 
+Route::get('/book/create', [BookController::class, 'create'])->middleware(['auth'])->name('create_book');
 Route::get('/book/{id}', [BookController::class, 'showBookPage'])->middleware(['auth'])->name('book_by_id');
+Route::delete('/book/{id}', [BookController::class, 'destroy'])->middleware(['auth'])->name('delete_book_by_id');
+Route::get('/book/edit/{id}', [BookController::class, 'edit'])->middleware(['auth'])->name('edit_page');
+Route::post('/book/edit/{id}', [BookController::class, 'update'])->middleware(['auth'])->name('edit_book_by_id');
 
 
 Route::get('/genre', function () {
