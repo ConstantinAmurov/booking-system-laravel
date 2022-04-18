@@ -13,7 +13,7 @@
                     @if(Auth::user()->is_librarian)
                     @include('admin.dashboard')
                     @else
-                    @include('user_dashboard')
+                    @include('user.dashboard')
                     @endif
                 </div>
             </div>
