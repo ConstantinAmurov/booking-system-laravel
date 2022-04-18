@@ -153,4 +153,16 @@ class BookController extends Controller
 
         return view('admin.books.index', compact('books', 'filter'));
     }
+
+    public function showGenrePage(Request $request)
+    {
+        $filter = $request->query('filter');
+
+        if (!empty($filter)) {
+            $genres = Genre::sortable()->where('name', 'like', '%' . $filter . '%')->paginate(10);
+        } else {
+            $genres = Genre::sortable()->paginate(10);
+        }
+        return view('admin.genres.index', compact('genres', 'filter'));
+    }
 }

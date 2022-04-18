@@ -36,9 +36,7 @@ Route::get('/book/edit/{id}', [BookController::class, 'edit'])->middleware(['aut
 Route::post('/book/edit/{id}', [BookController::class, 'update'])->middleware(['auth'])->name('edit_book_by_id');
 
 
-Route::get('/genre', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('genre');
+Route::get('/genre', [BookController::class, 'showGenrePage'])->middleware(['auth'])->name('genre');
 
 
 Route::get('/my_rental', function () {
