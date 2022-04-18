@@ -12,12 +12,20 @@ class BorrowController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $borrow = Borrow::with(relations: 'getUserRelation')->get();
 
-        dd($borrow);
+        $filter = $request->query('filter');
+        $borrows = Borrow::with(relations: 'getUserRelation')->get();
+
+
+        if (!empty($filter)) {
+            $borrows = Borrow::sortable()->where('name', 'like', '%' . $filter . '%')->paginate(10);
+        } else {
+            $borrows = Borrow::sortable()->paginate(10);
+        }
+
+        return view('admin.rentals.index',compact('borrows','filter'));
     }
 
     /**

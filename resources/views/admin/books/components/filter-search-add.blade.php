@@ -6,5 +6,9 @@
             <x-button type="submit" class=" mx-4">Filter</x-button>
         </div>
     </form>
-            <a href="book/create"><x-button class=" mx-4">Add</x-button></a>
+    @if(Auth::user()->is_librarian)
+    <a href="book/create">
+        <x-button class=" mx-4">Add</x-button>
+    </a>
+    @endif
 </div>

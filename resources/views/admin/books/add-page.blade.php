@@ -34,7 +34,7 @@
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6 2xl:col-span-6">
                                     <x-label for="language_code" value="Language Code" />
-                                    <x-input id="language_code" class="block mt-1 w-full" type="text" name="language_code" required autofocus />
+                                    <x-input id="language_code" class="block mt-1 w-full" type="text" name="language_code" autofocus />
 
                                     <x-label for="name" value="Genre" />
                                     <x-select name="genres[]" multiple required>

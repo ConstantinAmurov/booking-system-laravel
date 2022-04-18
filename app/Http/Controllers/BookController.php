@@ -19,10 +19,21 @@ class BookController extends Controller
 
 
 
-    public function index($id)
+    public function index(Request $request)
     {
-        $book = Book::findOrFail($id);
-        return $book;
+        $filter = $request->query('filter');
+
+        if (!empty($filter)) {
+            $books = Book::sortable()
+                ->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%')
+                ->paginate(10);
+        } else {
+            $books = Book::sortable()
+                ->paginate(10);
+        }
+
+
+        return view('admin.books.index', compact('books', 'filter'));
     }
 
     /**
@@ -136,20 +147,5 @@ class BookController extends Controller
         return redirect('dashboard');
     }
 
-    public function showBooksTablePage(Request $request)
-    {
-        $filter = $request->query('filter');
 
-        if (!empty($filter)) {
-            $books = Book::sortable()
-                ->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%')
-                ->paginate(10);
-        } else {
-            $books = Book::sortable()
-                ->paginate(10);
-        }
-
-
-        return view('admin.books.index', compact('books', 'filter'));
-    }
 }

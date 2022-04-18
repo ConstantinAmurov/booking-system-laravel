@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Support\Facades\Route;
@@ -20,14 +21,14 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
-Route::get('/dashboard', [DashboardController::class, 'showAdminDashboard'])->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/rental',)->middleware(['auth'])->name('rental');
+Route::get('/rental', [BorrowController::class, 'index'])->middleware(['auth'])->name('rental');
 
 // Book Routes
-Route::get('/book', [BookController::class, 'showBooksTablePage'])->middleware(['auth'])->name('book');
+Route::get('/book', [BookController::class, 'index'])->middleware(['auth'])->name('book');
 
-Route::get('/book/create', [BookController::class, 'create'])->middleware(['auth'])->name('create_book');
+Route::get('/book/create', [BookController::class, 'create'])->middleware(['auth'])->name('create_book_form');
 Route::post('/book/create', [BookController::class, 'store'])->middleware(['auth'])->name('create_book');
 
 Route::get('/book/{id}', [BookController::class, 'showBookPage'])->middleware(['auth'])->name('book_by_id');
@@ -43,15 +44,12 @@ Route::get('/genre', [GenreController::class, 'index'])->middleware(['auth'])->n
 Route::get('/genre/{id}/edit', [GenreController::class, 'edit'])->middleware(['auth'])->name('genre_edit_page');
 Route::post('/genre/{id}/edit', [GenreController::class, 'update'])->middleware(['auth'])->name('genre_edit');
 
-
-Route::delete('/genre/{id}/delete', [GenreController::class, 'destroy'])->middleware(['auth'])->name('genre_delete');
 Route::post('/genre', [GenreController::class, 'store'])->middleware(['auth'])->name('genre_store');
+Route::delete('/genre/{id}/delete', [GenreController::class, 'destroy'])->middleware(['auth'])->name('genre_delete');
 
 
+//Rentals
 
-Route::get('/my_rental', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('my_rental');
 
 
 Route::get('/profile', function () {

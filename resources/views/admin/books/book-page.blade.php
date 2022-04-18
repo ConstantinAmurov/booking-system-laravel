@@ -31,11 +31,11 @@
                                     <div class="col-span-12 sm:col-span-6 md:col-span-8 lg:col-span-8  xl:col-span-8 2xl:col-span-8 ">
                                         <p>
                                             @foreach($book->genres as $genre)
-                                                @if($loop->last)
-                                                    {{$genre->name}}
-                                                @else
-                                                    {{$genre->name}},
-                                                @endif
+                                            @if($loop->last)
+                                            {{$genre->name}}
+                                            @else
+                                            {{$genre->name}},
+                                            @endif
                                             @endforeach
                                         </p>
                                         <p>{{$book->released_at}}</p>
@@ -55,9 +55,10 @@
                                         @csrf
                                         <button class="px-4 py-1 rounded-md bg-red-500 hover:bg-red-600 hover:shadow-sm ml-4 text-white">Delete</button>
                                     </form>
-                                    @else
-                                    <button class="px-4 py-1 rounded-md bg-gray-100 hover:bg-gray-200 hover:shadow-sm">Borrow a book</button>
 
+                                    @elseif ($book->in_stock>1)
+                                    <button class="px-4 py-1 rounded-md bg-gray-100 hover:bg-gray-200 hover:shadow-sm">Borrow a book</button>
+                                    
                                     @endif
                                 </div>
                             </div>

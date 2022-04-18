@@ -46,6 +46,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Borrow::class, 'reader_id');
     }
+    public function readerActiveBorrows()
+    {
+        return $this->readerBorrows()->where('status', '=', 'ACCEPTED');
+    }
 
     public function managedRequests()
     {
@@ -56,6 +60,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Borrow::class, 'return_managed_by');
     }
-
-
 }
