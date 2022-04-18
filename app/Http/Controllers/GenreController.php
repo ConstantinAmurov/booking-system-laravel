@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Genre;
+
 
 class GenreController extends Controller
 {
+
+    private $styles = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $mode = "view";
+        $filter = $request->query('filter');
+        if (!empty($filter)) {
+            $genres = Genre::sortable()->where('name', 'like', '%' . $filter . '%')->paginate(10);
+        } else {
+            $genres = Genre::sortable()->paginate(10);
+        }
+        return view('admin.genres.index', compact('genres', 'filter', 'mode'))->with('styles', $this->styles);
     }
 
     /**
@@ -34,7 +46,11 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $genre = new Genre;
+        $genre->name =  $request->name;
+        $genre->style = $request->style;
+        $genre->save();
+        return redirect('/genre');
     }
 
     /**
@@ -54,9 +70,17 @@ class GenreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $filter = $request->query('filter');
+        if (!empty($filter)) {
+            $genres = Genre::sortable()->where('name', 'like', '%' . $filter . '%')->paginate(10);
+        } else {
+            $genres = Genre::sortable()->paginate(10);
+        }
+        $genre = Genre::find($id);
+        $mode = 'edit';
+        return view('admin.genres.index', compact('filter', 'genres', 'genre', 'mode'))->with('styles', $this->styles);
     }
 
     /**
@@ -68,7 +92,13 @@ class GenreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $genre = Genre::findOrFail($id);
+
+        $genre->name = $request->name;
+        $genre->style = $request->style;
+
+        $genre->save();
+        return  redirect('/genre/');
     }
 
     /**
@@ -79,6 +109,10 @@ class GenreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $genre = Genre::findOrFail($id);
+        if ($genre) {
+            $genre->delete();
+        }
+        return redirect('genre');
     }
 }
