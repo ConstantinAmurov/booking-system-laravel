@@ -33,8 +33,8 @@ class BookController extends Controller
      */
     public function create(Request $request)
     {
-        
-        return 'Success';
+        $genres = Genre::all();
+        return view('admin.books.add-page', compact('genres'));
     }
     /**
      * Store a newly created resource in storage.
@@ -44,7 +44,27 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $book = new Book;
+        $lastValue = Book::latest()->first();
+
+        if ($lastValue) {
+            $book->id = $lastValue->id + 1;
+        }
+        $book->id = 1;
+        $book->title = $request->title;
+        $book->author = $request->author;
+        $book->description = $request->description;
+        $book->released_at = $request->released_at;
+        $book->pages = $request->pages;
+        $book->isbn = $request->isbn;
+        $book->language_code = $request->language_code;
+        $book->in_stock  = $request->in_stock;
+
+        $genres = Genre::find($request->genres);
+        $book->genres()->sync($genres);
+
+        $book->save();
+        return  redirect('/book/' . $book->id);
     }
 
     /**
@@ -85,7 +105,7 @@ class BookController extends Controller
     public function update(Request $request, $id)
     {
         $book = Book::findOrFail($id);
-        
+
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
