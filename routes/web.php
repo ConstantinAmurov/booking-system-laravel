@@ -5,6 +5,7 @@ use App\Http\Controllers\BorrowController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GenreController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
+Route::get('/profile',view('common.profile'))->middleware(['auth'])->name('profile');
 
 
 // Book Routes
@@ -60,9 +62,6 @@ Route::post('/rental/{id}/accept', [BorrowController::class, 'accept'])->middlew
 Route::post('/rental/{id}/return', [BorrowController::class, 'return'])->middleware(['auth'])->name('return_rental');
 
 
-Route::get('/profile', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('profile');
 
 
 

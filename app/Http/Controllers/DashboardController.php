@@ -44,9 +44,11 @@ class DashboardController extends Controller
         } else {
             $borrows = $borrows->paginate(10);
         }
-        
+
         return view('user.dashboard', compact('borrows'));
     }
+
+ 
 
     private function getActiveBooksCount()
     {
