@@ -21,16 +21,16 @@
                                     <x-input id="author" class="block mt-1 w-full" type="text" name="author" required autofocus />
 
                                     <x-label for="released_at" value="Released At" />
-                                    <x-input id="title" class="block mt-1 w-full" type="date" name="released_at" required autofocus />
+                                    <x-input id="title" class="block mt-1 w-full" type="date" max="{{date('Y-m-d')}}" name="released_at" required autofocus />
 
                                     <x-label for="pages" value="Pages" />
                                     <x-input id="pages" class="block mt-1 w-full" type="number" name="pages" required autofocus />
 
                                     <x-label for="isbn" value="ISBN" />
-                                    <x-input id="isbm" class="block mt-1 w-full" type="text" name="isbn" required autofocus />
+                                    <x-input id="isbm" pattern="/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/i" class="block mt-1 w-full" type="text" name="isbn" required autofocus />
 
                                     <x-label for="description" value="Description" />
-                                    <x-textarea id="description" class="block mt-1 w-full" name="description" required autofocus rows="10" />
+                                    <x-textarea id="description" class="block mt-1 w-full" name="description" autofocus rows="10" />
                                 </div>
                                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6 2xl:col-span-6">
                                     <x-label for="language_code" value="Language Code" />

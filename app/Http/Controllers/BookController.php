@@ -54,6 +54,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+
         $book = new Book;
         $lastValue = Book::latest()->first();
 
@@ -88,7 +89,7 @@ class BookController extends Controller
     {
         $user = Auth::user();
         $book = Book::with('genres')->findOrFail($id);
-        $userCanBorrow = !Borrow::where([['reader_id', '=', $user->id], ['book_id', '=', $book->id] , ['status', '!=', 'RETURNED']])->exists();
+        $userCanBorrow = !Borrow::where([['reader_id', '=', $user->id], ['book_id', '=', $book->id], ['status', '!=', 'RETURNED']])->exists();
         return view('admin.books.book-page', compact('book', 'userCanBorrow'));
     }
 
