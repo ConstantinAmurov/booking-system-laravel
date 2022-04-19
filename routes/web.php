@@ -23,7 +23,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
-Route::get('/rental', [BorrowController::class, 'index'])->middleware(['auth'])->name('rental');
 
 // Book Routes
 Route::get('/book', [BookController::class, 'index'])->middleware(['auth'])->name('book');
@@ -36,7 +35,10 @@ Route::delete('/book/{id}', [BookController::class, 'destroy'])->middleware(['au
 
 Route::get('/book/edit/{id}', [BookController::class, 'edit'])->middleware(['auth'])->name('edit_page');
 Route::post('/book/edit/{id}', [BookController::class, 'update'])->middleware(['auth'])->name('edit_book_by_id');
+Route::post('/book/{id}/borrow', [BookController::class, 'borrow'])->middleware(['auth'])->name('borrow_book_by_id');
 
+
+// /book/{{$book->id}}/borrow
 
 //Genres Route
 Route::get('/genre', [GenreController::class, 'index'])->middleware(['auth'])->name('genre');
@@ -49,15 +51,16 @@ Route::delete('/genre/{id}/delete', [GenreController::class, 'destroy'])->middle
 
 
 //Rentals
-
+Route::get('/rental', [BorrowController::class, 'index'])->middleware(['auth'])->name('rental');
+Route::get('/rental/{id}', [BorrowController::class, 'view'])->middleware(['auth'])->name('view_rental');
+Route::delete('/rental/{id}/reject', [BorrowController::class, 'reject'])->middleware(['auth'])->name('reject_rental');
+Route::post('/rental/{id}/accept', [BorrowController::class, 'accept'])->middleware(['auth'])->name('accept_rental');
+Route::post('/rental/{id}/return', [BorrowController::class, 'return'])->middleware(['auth'])->name('return_rental');
 
 
 Route::get('/profile', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('profile');
-
-
-
 
 
 

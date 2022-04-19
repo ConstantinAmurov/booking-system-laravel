@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Borrow;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BorrowController extends Controller
 {
@@ -25,7 +27,15 @@ class BorrowController extends Controller
             $borrows = Borrow::sortable()->paginate(10);
         }
 
-        return view('admin.rentals.index',compact('borrows','filter'));
+        return view('admin.rentals.index', compact('borrows', 'filter'));
+    }
+
+
+    public function view($id)
+    {
+        $borrow = Borrow::with('getBookRelation')->find($id);
+        $book = $borrow->getBookRelation;
+        return view('user.rentals.rental-page', compact('book', 'borrow'));
     }
 
     /**
@@ -36,6 +46,45 @@ class BorrowController extends Controller
     public function create()
     {
         //
+    }
+
+    public function accept(Request $request, $id)
+    {
+        $deadline = $request->deadline;
+        $user = Auth::user();
+        $borrow = Borrow::find($id);
+
+        $borrow->request_managed_by = $user->id;
+        $borrow->deadline = $deadline;
+        $borrow->status = "ACCEPTED";
+        $borrow->save();
+
+        return redirect('/rental');
+    }
+
+    public function reject($id)
+    {
+        $user = Auth::user();
+        $borrow = Borrow::find($id);
+        $borrow->request_managed_by = $user->id;
+        $borrow->deadline= "";
+        $borrow->status = "REJECTED";
+        $borrow->save();
+
+        return redirect('/rental');
+    }
+
+    public function return($id) {
+        $user = Auth::user();
+        $borrow = Borrow::find($id);
+
+        $borrow->deadline= "";
+        $borrow->returned_at = Carbon::now()->toDateString();
+        $borrow->return_managed_by = $user->id;
+        $borrow->status = "RETURNED";
+        $borrow->save();
+
+        return redirect('/rental');
     }
 
     /**

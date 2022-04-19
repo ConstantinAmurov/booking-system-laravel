@@ -57,8 +57,10 @@
                                     </form>
 
                                     @elseif ($book->in_stock>1)
-                                    <button class="px-4 py-1 rounded-md bg-gray-100 hover:bg-gray-200 hover:shadow-sm">Borrow a book</button>
-                                    
+                                    <form style="display:inline-block" action="{{$book->id}}/borrow" method="POST">
+                                        @csrf
+                                        <button class="px-4 py-1 rounded-md bg-gray-100 hover:bg-gray-200 hover:shadow-sm">Borrow a book</button>
+                                    </form>
                                     @endif
                                 </div>
                             </div>

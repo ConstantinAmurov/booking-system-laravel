@@ -26,7 +26,7 @@
         @foreach ($borrows as $borrow)
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                <a href="book/{{$borrow->getBookRelation->id}}"> {{ $borrow->getBookRelation->title }} </a>
+                <a href="rental/{{$borrow->getBookRelation->id}}"> {{ $borrow->getBookRelation->title }} </a>
             </th>
             <td class="px-6 py-4"> {{ $borrow->request_processed_at}}</td>
             <td class="px-6 py-4"> {{ $borrow->status}}</td>

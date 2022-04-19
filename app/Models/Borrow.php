@@ -14,7 +14,7 @@ class Borrow extends Model
     protected $table = 'borrows';
     protected $fillable = ['reader_id','book_id','status'];
 
-    public $sortable = ['reader_id','book_id','status'];
+    public $sortable = ['reader_id','book_id','status','deadline','returned_at','request_managed_by'];
 
 
 

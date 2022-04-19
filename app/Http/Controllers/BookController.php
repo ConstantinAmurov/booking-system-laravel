@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Borrow;
 use App\Models\Genre;
 use Illuminate\Http\Request;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -18,22 +18,21 @@ class BookController extends Controller
 
 
 
-
     public function index(Request $request)
     {
         $filter = $request->query('filter');
+        $genre = $request->query('genre');
+        $books = Book::with(relations: 'genres')->get();
+        $books = Book::sortable();
+        $allGenres = Genre::all();
 
         if (!empty($filter)) {
-            $books = Book::sortable()
-                ->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%')
-                ->paginate(10);
-        } else {
-            $books = Book::sortable()
-                ->paginate(10);
+            $books = $books->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%');
         }
 
+        $books = $books->paginate(10);
 
-        return view('admin.books.index', compact('books', 'filter'));
+        return view('admin.books.index', compact('books', 'filter'))->with('genres', $allGenres);
     }
 
     /**
@@ -59,8 +58,7 @@ class BookController extends Controller
 
         if ($lastValue) {
             $book->id = $lastValue->id + 1;
-        }
-        $book->id = 1;
+        } else $book->id = 1;
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
@@ -105,6 +103,7 @@ class BookController extends Controller
         return view('admin.books.edit-page', compact('book', 'genres'));
     }
 
+
     /**
      * Update the specified resource in storage.
      *
@@ -148,4 +147,21 @@ class BookController extends Controller
     }
 
 
+    public function borrow($id)
+    {
+        $user = Auth::user();
+        $book = Book::find($id);
+
+        $borrow = new Borrow;
+
+        $borrow->reader_id = $user->id;
+        $borrow->book_id = $book->id;
+
+        $borrow->save();
+
+        $book->in_stock--;
+        $book->save();
+
+        return redirect('dashboard');
+    }
 }
