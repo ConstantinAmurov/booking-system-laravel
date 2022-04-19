@@ -32,6 +32,9 @@
                     <x-nav-link :href="route('book')" :active="request()->routeIs('book')">
                         {{ __('Search Books') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('genre')" :active="request()->routeIs('genre')">
+                        {{ __('List Genres') }}
+                    </x-nav-link>
                     @endif
 
                 </div>

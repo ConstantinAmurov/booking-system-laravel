@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use Illuminate\Http\Request;
 use App\Models\Genre;
 
@@ -26,6 +27,15 @@ class GenreController extends Controller
             $genres = Genre::sortable()->paginate(10);
         }
         return view('admin.genres.index', compact('genres', 'filter', 'mode'))->with('styles', $this->styles);
+    }
+
+    public function showBooksByGenre($id)
+    {
+        $books = Book::whereHas('genres', function ($query) use ($id) {
+            return $query->where('genre_id', '=', $id);
+        })->get();
+
+        return view('common.list-by-genre', compact('books'));
     }
 
     /**

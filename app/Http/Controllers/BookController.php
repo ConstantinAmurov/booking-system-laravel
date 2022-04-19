@@ -22,9 +22,10 @@ class BookController extends Controller
     {
         $filter = $request->query('filter');
         $genre = $request->query('genre');
-        $books = Book::with(relations: 'genres')->get();
+
         $books = Book::sortable();
         $allGenres = Genre::all();
+
 
         if (!empty($filter)) {
             $books = $books->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%');
@@ -59,6 +60,7 @@ class BookController extends Controller
         if ($lastValue) {
             $book->id = $lastValue->id + 1;
         } else $book->id = 1;
+
         $book->title = $request->title;
         $book->author = $request->author;
         $book->description = $request->description;
@@ -67,6 +69,7 @@ class BookController extends Controller
         $book->isbn = $request->isbn;
         $book->language_code = $request->language_code;
         $book->in_stock  = $request->in_stock;
+
 
         $genres = Genre::find($request->genres);
         $book->genres()->sync($genres);
@@ -83,8 +86,10 @@ class BookController extends Controller
      */
     public function showBookPage($id)
     {
+        $user = Auth::user();
         $book = Book::with('genres')->findOrFail($id);
-        return view('admin.books.book-page', compact('book'));
+        $userCanBorrow = !Borrow::where([['reader_id', '=', $user->id], ['book_id', '=', $book->id] , ['status', '!=', 'RETURNED']])->exists();
+        return view('admin.books.book-page', compact('book', 'userCanBorrow'));
     }
 
     /**

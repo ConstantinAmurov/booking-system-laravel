@@ -33,7 +33,7 @@
                             @if (count($genres) >1)
                             <ol class="list-decimal mx-7 mt-4 ">
                                 @foreach($genres as $genre)
-                                <li><a href='genre/{{$genre->id}}' class="">{{$genre->name}}</a> </li>
+                                <li><a href='genre/{{$genre->id}}/books' class="">{{$genre->name}}</a> </li>
                                 @endforeach
                             </ol>
                             @else

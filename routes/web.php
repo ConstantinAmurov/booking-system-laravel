@@ -44,6 +44,8 @@ Route::post('/book/{id}/borrow', [BookController::class, 'borrow'])->middleware(
 Route::get('/genre', [GenreController::class, 'index'])->middleware(['auth'])->name('genre');
 
 Route::get('/genre/{id}/edit', [GenreController::class, 'edit'])->middleware(['auth'])->name('genre_edit_page');
+Route::get('/genre/{id}/books', [GenreController::class, 'showBooksByGenre'])->middleware(['auth'])->name('genre_book_page');
+
 Route::post('/genre/{id}/edit', [GenreController::class, 'update'])->middleware(['auth'])->name('genre_edit');
 
 Route::post('/genre', [GenreController::class, 'store'])->middleware(['auth'])->name('genre_store');
