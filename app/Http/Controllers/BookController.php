@@ -21,11 +21,8 @@ class BookController extends Controller
     public function index(Request $request)
     {
         $filter = $request->query('filter');
-        $genre = $request->query('genre');
-
         $books = Book::sortable();
         $allGenres = Genre::all();
-
 
         if (!empty($filter)) {
             $books = $books->where('title', 'like', '%' . $filter . '%')->orWhere('author', 'like', '%' . $filter . '%');

@@ -27,7 +27,7 @@
                                     <x-input id="pages" class="block mt-1 w-full" type="number" name="pages" value="{{$book->pages}}" required autofocus />
 
                                     <x-label for="isbn" value="ISBN" />
-                                    <x-input id="isbm" class="block mt-1 w-full" type="text" name="isbn" value="{{$book->isbn}}" required autofocus />
+                                    <x-input id="isbn" class="block mt-1 w-full" pattern="[0-9]*[-| ][0-9]*[-| ][0-9]*[-| ][0-9]*[-| ][0-9]*" type="text" name="isbn" value="{{$book->isbn}}" required autofocus />
 
                                     <x-label for="description" value="Description" />
                                     <x-textarea id="description" class="block mt-1 w-full" name="description" value="{{$book->description}}" required autofocus rows="10" />
@@ -35,7 +35,6 @@
                                 <div class="col-span-12 sm:col-span-12 md:col-span-6 lg:col-span-6 xl:col-span-6 2xl:col-span-6">
                                     <x-label for="language_code" value="Language Code" />
                                     <x-input id="language_code" class="block mt-1 w-full" type="text" name="language_code" value="{{$book->language_code}}" required autofocus />
-
 
                                     <x-label for="name" value="Genre" />
                                     <x-select name="genres[]" multiple required>

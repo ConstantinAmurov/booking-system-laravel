@@ -16,17 +16,38 @@ class BorrowController extends Controller
      */
     public function index(Request $request)
     {
-
         $filter = $request->query('filter');
-        $borrows = Borrow::with(relations: 'getUserRelation')->get();
+        $status  = $request->query('status');
 
+        $borrows = Borrow::sortable();
 
         if (!empty($filter)) {
-            $borrows = Borrow::sortable()->where('name', 'like', '%' . $filter . '%')->paginate(10);
-        } else {
-            $borrows = Borrow::sortable()->paginate(10);
+            $borrows = $borrows->where('name', 'like', '%' . $filter . '%');
         }
 
+        if (!empty($status)) {
+            switch ($status) {
+                case 'pending':
+                    $borrows = $borrows->where('status', '=', 'PENDING');
+                    break;
+                case 'in_time':
+                    $borrows = $borrows->where('status', '=', 'PENDING');
+                    break;
+                case 'late_rentals':
+                    echo "i equals 2";
+                    break;
+
+                case 'rejected':
+                    echo "i equals 2";
+                    break;
+                case 'returned':
+                    echo "i equals 2";
+                    break;
+            }
+        }
+
+
+        $borrows = $borrows->paginate(10);
         return view('admin.rentals.index', compact('borrows', 'filter'));
     }
 
@@ -67,18 +88,19 @@ class BorrowController extends Controller
         $user = Auth::user();
         $borrow = Borrow::find($id);
         $borrow->request_managed_by = $user->id;
-        $borrow->deadline= "";
+        $borrow->deadline = "";
         $borrow->status = "REJECTED";
         $borrow->save();
 
         return redirect('/rental');
     }
 
-    public function return($id) {
+    public function return($id)
+    {
         $user = Auth::user();
         $borrow = Borrow::find($id);
 
-        $borrow->deadline= "";
+        $borrow->deadline = "";
         $borrow->returned_at = Carbon::now()->toDateString();
         $borrow->return_managed_by = $user->id;
         $borrow->status = "RETURNED";

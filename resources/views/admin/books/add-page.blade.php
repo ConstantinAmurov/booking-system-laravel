@@ -27,7 +27,7 @@
                                     <x-input id="pages" class="block mt-1 w-full" type="number" name="pages" required autofocus />
 
                                     <x-label for="isbn" value="ISBN" />
-                                    <x-input id="isbm" pattern="/^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$/i" class="block mt-1 w-full" type="text" name="isbn" required autofocus />
+                                    <x-input id="isbm" class="block mt-1 w-full" pattern="[0-9]*[-| ][0-9]*[-| ][0-9]*[-| ][0-9]*[-| ][0-9]*" type="text" name="isbn" required autofocus />
 
                                     <x-label for="description" value="Description" />
                                     <x-textarea id="description" class="block mt-1 w-full" name="description" autofocus rows="10" />
