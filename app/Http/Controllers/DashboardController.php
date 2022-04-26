@@ -77,4 +77,8 @@ class DashboardController extends Controller
 
         return $activeBooksCount;
     }
+
+    private function getProfile() {
+        return view('common.profile');
+    }
 }

@@ -23,8 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
-Route::get('/profile',view('common.profile'))->middleware(['auth'])->name('profile');
-
+Route::get('/profile', [DashboardController::class, 'getProfile'])->middleware(['auth'])->name('profile');
 
 // Book Routes
 Route::get('/book', [BookController::class, 'index'])->middleware(['auth'])->name('book');
