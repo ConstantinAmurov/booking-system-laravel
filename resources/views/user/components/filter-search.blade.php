@@ -2,7 +2,6 @@
 
     <form class="form-inline" method="GET">
         <div class="flex ">
-            <x-input type="text" id="filter" name="filter" placeholder="Status or Book ID" value="{{$filter}}" />
             <x-select id="status" name="status" class="mx-4">
                 <option value=''></option>
                 <option value='pending'>Pending</option>

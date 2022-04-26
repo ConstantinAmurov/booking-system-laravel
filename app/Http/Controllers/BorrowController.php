@@ -20,9 +20,11 @@ class BorrowController extends Controller
         $status  = $request->query('status');
 
         $borrows = Borrow::sortable();
+        $borrows = $borrows->with('getBookRelation')->with('getLibrarianRelation');
+
 
         if (!empty($filter)) {
-            $borrows = $borrows->where('name', 'like', '%' . $filter . '%');
+            $borrows = $borrows->where('reader_id', 'like', '%' . $filter . '%');
         }
 
         if (!empty($status)) {
@@ -31,17 +33,16 @@ class BorrowController extends Controller
                     $borrows = $borrows->where('status', '=', 'PENDING');
                     break;
                 case 'in_time':
-                    $borrows = $borrows->where('status', '=', 'PENDING');
+                    $borrows = $borrows->where('status', '=', 'ACCEPTED')->whereDate('deadline', '>', Carbon::now());
                     break;
                 case 'late_rentals':
-                    echo "i equals 2";
+                    $borrows = $borrows->where('status', '=', 'ACCEPTED')->whereDate('deadline', '<', Carbon::now());
                     break;
-
                 case 'rejected':
-                    echo "i equals 2";
+                    $borrows = $borrows->where('status', '=', 'REJECTED');
                     break;
                 case 'returned':
-                    echo "i equals 2";
+                    $borrows = $borrows->where('status', '=', 'RETURNED');
                     break;
             }
         }
@@ -88,7 +89,6 @@ class BorrowController extends Controller
         $user = Auth::user();
         $borrow = Borrow::find($id);
         $borrow->request_managed_by = $user->id;
-        $borrow->deadline = "";
         $borrow->status = "REJECTED";
         $borrow->save();
 
@@ -99,8 +99,6 @@ class BorrowController extends Controller
     {
         $user = Auth::user();
         $borrow = Borrow::find($id);
-
-        $borrow->deadline = "";
         $borrow->returned_at = Carbon::now()->toDateString();
         $borrow->return_managed_by = $user->id;
         $borrow->status = "RETURNED";

@@ -6,8 +6,7 @@ use App\Models\Book;
 use App\Models\Genre;
 use App\Models\Borrow;
 use App\Models\User;
-
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -33,22 +32,38 @@ class DashboardController extends Controller
     public function showUserDashboard(Request $request)
     {
 
-        $filter = $request->query('filter');
+        $status = $request->query('status');
         $user = User::all()->find(Auth::id());
         $borrows = Borrow::sortable();
-        $borrows = $borrows->with('getBookRelation')->where([['reader_id', '=', $user->id]]);
-        // $borrow = ->get();
+        $borrows = $borrows->with('getBookRelation')->with('getLibrarianRelation')->where('reader_id', '=', $user->id);
 
-        if (!empty($filter)) {
-            $borrows = $borrows->where('name', 'like', '%' . $filter . '%')->paginate(10);
-        } else {
-            $borrows = $borrows->paginate(10);
+
+        if (!empty($status)) {
+            switch ($status) {
+                case 'pending':
+                    $borrows = $borrows->where('status', '=', 'PENDING');
+                    break;
+                case 'in_time':
+                    $borrows = $borrows->where('status', '=', 'ACCEPTED')->whereDate('deadline', '>', Carbon::now());
+                    break;
+                case 'late_rentals':
+                    $borrows = $borrows->where('status', '=', 'ACCEPTED')->whereDate('deadline', '<', Carbon::now());
+                    break;
+                case 'rejected':
+                    $borrows = $borrows->where('status', '=', 'REJECTED');
+                    break;
+                case 'returned':
+                    $borrows = $borrows->where('status', '=', 'RETURNED');
+                    break;
+            }
         }
+
+        $borrows = $borrows->paginate(10);
 
         return view('user.dashboard', compact('borrows'));
     }
 
- 
+
 
     private function getActiveBooksCount()
     {

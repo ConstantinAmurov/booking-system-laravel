@@ -2,24 +2,31 @@
     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 
         <tr>
-            <th scope="col" class="px-6 py-3">
-                @sortablelink('reader_id','Reader Id')
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('getBookRelation.title','Title')
             </th>
-            <th scope="col" class="px-6 py-3">
-                @sortablelink('book_id','Book Id')
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('getBookRelation.author','Author')
             </th>
-            <th scope="col" class="px-6 py-3">
-                @sortablelink('request_managed_by','Request Managed By ( Id )')
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('getBookRelation.released_at','Released at')
             </th>
-            <th scope="col" class="px-6 py-3">
-                @sortablelink('returned_at','Returned at')
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('created_at','Request created at')
             </th>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" class="px-4 py-3">
                 @sortablelink('status','Status')
             </th>
-            <th scope="col" class="px-6 py-3">
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('request_processed_at','Request Processed At')
+            </th>
+            <th scope="col" class="px-4 py-3">
                 @sortablelink('deadline','Deadline')
             </th>
+            <th scope="col" class="px-4 py-3">
+                @sortablelink('getAdminRelation.name','Librarian name')
+            </th>
+
             <th scope="col" class="px-6 py-3">
                 Actions
             </th>
@@ -35,31 +42,24 @@
         @foreach ($borrows as $borrow)
         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
             <th scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-                {{ $borrow->reader_id }}
+                <a href="rental/{{$borrow->getBookRelation->id}}"> {{ $borrow->getBookRelation->title }} </a>
             </th>
-            <td class="px-6 py-4"> {{ $borrow->book_id }}</td>
-
-            @if($borrow->request_managed_by)
-            <td class="px-6 py-4"> {{ $borrow->request_managed_by }}</td>
-            @else
-            <td class="px-6 py-4">Not managed yet</td>
-            @endif
-
-            @if($borrow->returned_at)
-            <td class="px-6 py-4"> {{ $borrow->returned_at }}</td>
-            @else
-            <td class="px-6 py-4">Not returned yet</td>
-            @endif
-
-
+            <td class="px-6 py-4"> {{ $borrow->getBookRelation->author}}</td>
+            <td class="px-6 py-4"> {{ $borrow->getBookRelation->released_at}}</td>
+            <td class="px-6 py-4"> {{ $borrow->created_at}}</td>
             <td class="px-6 py-4"> {{ $borrow->status }}</td>
 
-            @if($borrow->deadline)
-            <td class="px-6 py-4"> {{ $borrow->deadline }}</td>
+            @if($borrow->request_processed_at)
+            <td class="px-6 py-4"> {{ $borrow->request_processed_at}}</td>
             @else
-            <td class="px-6 py-4">No deadline yet</td>
+            <td class="px-6 py-4">No yet processed</td>
             @endif
-
+            @if($borrow->deadline)
+            <td class="px-6 py-4"> {{ $borrow->deadline}}</td>
+            @else
+            <td class="px-6 py-4"> No deadline yet</td>
+            @endif
+            <td class="px-6 py-4"> {{ $borrow->getLibrarianRelation->name}}</td>
 
             <td>
                 <div class="flex h-7">
