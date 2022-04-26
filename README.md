@@ -1,5 +1,6 @@
-<Constantin Amurov>
-<BPBLNO>
+<p> Student: Constantin Amurov </p>
+<p>Neptun Code :BPBLNO </p>
+
 This solution was submitted and prepared by stundent named above for the home assignment of the Web engineering course.
 I declare that this solution is my own work.
 I have not copied or used third party solutions.
